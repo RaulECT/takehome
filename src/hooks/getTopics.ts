@@ -1,5 +1,6 @@
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
+import { TOPICS } from '../graphql/topics';
 import { RelatedTopicsType } from '../Components/RelatedTerms';
 import { GithubUser } from '../Components/GithubUsers';
 
@@ -9,7 +10,7 @@ type UseTopicsProps = {
 
 type TopicsQueryResponse = {
   topic: {
-    name: string;
+    name: string | undefined;
     stargazerCount: number;
     viewerHasStarred: boolean;
     relatedTopics: RelatedTopicsType[];
@@ -20,29 +21,10 @@ type TopicsQueryResponse = {
   }
 }
 
-const TOPICS = gql`query topic($name: String!) {
-  topic(name: $name) {
-    name
-    stargazerCount
-    viewerHasStarred
-    relatedTopics {
-      name
-    }
-    stargazers(first: 3) {
-      totalCount
-      nodes {
-        avatarUrl
-        name
-        login
-      }
-    }
-  }
-}`;
-
 const useTopics = ({ initialTopic }: UseTopicsProps) => {
-  const { data } = useQuery<TopicsQueryResponse>(TOPICS, { variables: { name: initialTopic } });
+  const { data, refetch } = useQuery<TopicsQueryResponse>(TOPICS, { variables: { name: initialTopic } });
 
-  return { data };
+  return { data, refetch };
 };
 
 export default useTopics;

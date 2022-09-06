@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const TOPICS = gql`
-  query topic($name: String) {
+  query topic($name: String!) {
     topic(name: $name) {
       name
       stargazerCount

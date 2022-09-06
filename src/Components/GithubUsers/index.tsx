@@ -11,7 +11,7 @@ export type GithubUser = {
 };
 
 type GithubUsersProps = {
-  currentTerm: string;
+  currentTerm: string | undefined;
   users: GithubUser[] | undefined;
 };
 

@@ -9,8 +9,12 @@ import GithubUsers from './Components/GithubUsers';
 import useTopics from './hooks/getTopics';
 
 function App() {
-  const {data} = useTopics({ initialTopic: 'react' });
+  const { data, refetch } = useTopics({ initialTopic: 'react' });
   console.log('[data]', data, process.env);
+
+  const onSelectTopic = (topicSelected: string) => {
+    refetch({ name: topicSelected });
+  }
 
   return (
     <div className="App">
@@ -18,9 +22,13 @@ function App() {
 
       <TermsCounter term={data?.topic.name} count={data?.topic.stargazerCount} />
 
-      <RelatedTerms currentTerm={data?.topic.name} relatedTopics={data?.topic.relatedTopics} />
+      <RelatedTerms
+        currentTerm={data?.topic.name}
+        relatedTopics={data?.topic.relatedTopics}
+        onSelectTopic={onSelectTopic}
+      />
 
-      <GithubUsers currentTerm='React' users={data?.topic.stargazers.nodes} />
+      <GithubUsers currentTerm={data?.topic.name} users={data?.topic.stargazers.nodes} />
     </div>
   );
 }
