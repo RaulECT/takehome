@@ -4,7 +4,7 @@ import styled from '@emotion/styled/macro';
 import Chip from '../Chip';
 import { Label } from '../Label';
 
-type RelatedTopicsType = {
+export type RelatedTopicsType = {
   name: string;
 };
 

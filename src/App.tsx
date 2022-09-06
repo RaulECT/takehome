@@ -6,7 +6,12 @@ import TermsCounter from './Components/TermsCounter';
 import RelatedTerms from './Components/RelatedTerms';
 import GithubUsers from './Components/GithubUsers';
 
+import useTopics from './hooks/getTopics';
+
 function App() {
+  const {data} = useTopics({ initialTopic: 'react' });
+  console.log('[data]', data, process.env);
+
   return (
     <div className="App">
       <Header titleText='Aspiration Takehome' placeholder='Search topic...' />
