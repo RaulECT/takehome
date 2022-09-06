@@ -9,8 +9,8 @@ export type RelatedTopicsType = {
 };
 
 type RelatedTermsProps = {
-  currentTerm: string;
-  relatedTopics: RelatedTopicsType[];
+  currentTerm: string | undefined;
+  relatedTopics: RelatedTopicsType[] | undefined;
 };
 
 const Container = styled.section``;
@@ -26,7 +26,7 @@ const RelatedTerms: React.FC<RelatedTermsProps> = ({ currentTerm, relatedTopics 
     <Label>Some topics related with “{currentTerm}” are:</Label>
 
     <ChipsContainer>
-      {relatedTopics.map((topic, index) => <Chip key={index} value={topic.name} />)}
+      {relatedTopics && relatedTopics.map((topic, index) => <Chip key={index} value={topic.name} />)}
     </ChipsContainer>
   </Container>
 );

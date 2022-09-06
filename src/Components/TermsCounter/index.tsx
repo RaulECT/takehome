@@ -5,8 +5,8 @@ import { Label } from '../Label';
 import { COLORS, SIZES } from '../../Utils/generalStyles';
 
 type TermCounterProps = {
-  term: string;
-  count: number;
+  term: string | undefined;
+  count: number | undefined;
 };
 
 const Container = styled.section`

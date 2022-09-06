@@ -12,7 +12,7 @@ export type GithubUser = {
 
 type GithubUsersProps = {
   currentTerm: string;
-  users: GithubUser[];
+  users: GithubUser[] | undefined;
 };
 
 const Container = styled.section`
@@ -29,7 +29,7 @@ const GithubUsers: React.FC<GithubUsersProps> = ({ currentTerm, users }) => (
   <Container>
     <Label>Some who starred {currentTerm} are:</Label>
     <UsersContainer>
-      {users.map((user, index) => <UserCard key={`user_${index}`} user={user} />)}
+      {users ? users.map((user, index) => <UserCard key={`user_${index}`} user={user} />) : <Label>No users</Label>}
     </UsersContainer>
   </Container>
 );
