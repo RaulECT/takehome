@@ -9,7 +9,10 @@ type TermCounterProps = {
   count: number;
 };
 
-const Container = styled.section``;
+const Container = styled.section`
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+`;
 
 const CounterLabel = styled.p`
   margin: 0;
