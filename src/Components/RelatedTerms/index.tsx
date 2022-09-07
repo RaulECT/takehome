@@ -29,7 +29,7 @@ const RelatedTerms: React.FC<RelatedTermsProps> = ({ currentTerm, relatedTopics,
     <Label>Some topics related with “{currentTerm}” are:</Label>
 
     <ChipsContainer>
-      {relatedTopics && relatedTopics.map((topic, index) => <Chip key={index} value={topic.name} onClick={onSelectTopic} />)}
+      {relatedTopics ? relatedTopics.map((topic, index) => <Chip key={index} value={topic.name} onClick={onSelectTopic} />) : <Label>No related topics found</Label>}
     </ChipsContainer>
   </Container>
 );
