@@ -9,12 +9,12 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const httpLink = new HttpLink({ uri: 'https://api.github.com/graphql', headers: { 'Authorization': `Bearer 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`, } });
+const httpLink = new HttpLink({ uri: process.env.REACT_APP_API_URL, headers: { 'Authorization': `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`, } });
 
 const authLink = new ApolloLink((operation, forward) => {
   operation.setContext({
     heades: {
-      'Authorization': `Bearer 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`,
+      'Authorization': `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`,
     }
   });
 

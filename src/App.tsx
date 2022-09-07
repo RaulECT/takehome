@@ -9,7 +9,7 @@ import GithubUsers from './Components/GithubUsers';
 import useTopics from './hooks/getTopics';
 
 function App() {
-  const { data, refetch } = useTopics({ initialTopic: 'react' });
+  const { data, refetch } = useTopics({ initialTopic: process.env.REACT_APP_INITIAL_SEARCH_VALUE || '' });
   const refetchSearchRef = useRef<NodeJS.Timeout | string>('');
 
   const onSelectTopic = (topicSelected: string) => {
