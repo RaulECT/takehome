@@ -5,6 +5,7 @@ import { COLORS, SIZES } from '../../Utils/generalStyles';
 
 type ChipProps = {
   value: string;
+  onClick: (value: string) => void;
 }
 
 const Span = styled.span`
@@ -17,8 +18,8 @@ const Span = styled.span`
   cursor: pointer;
 `;
 
-const Chip: React.FC<ChipProps> = ({ value }) => (
-  <Span>{value}</Span>
+const Chip: React.FC<ChipProps> = ({ value, onClick }) => (
+  <Span onClick={() => onClick(value)}>{value}</Span>
 );
 
 export default Chip;

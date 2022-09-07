@@ -5,6 +5,7 @@ import { SIZES, COLORS } from '../../Utils/generalStyles';
 
 type SearchProps = {
   placeholder: string;
+  onSearch: (value: string) => void;
 }
 
 const Container = styled.section`
@@ -35,10 +36,10 @@ const InputSearch = styled.input`
   }
 `;
 
-const Search: React.FC<SearchProps> = ({ placeholder }) => (
+const Search: React.FC<SearchProps> = ({ placeholder, onSearch }) => (
   <Container>
     <FaSearch />
-    <InputSearch placeholder={placeholder} />
+    <InputSearch placeholder={placeholder} onChange={e => onSearch(e.target.value)} />
   </Container>
 );
 

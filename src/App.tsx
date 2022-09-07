@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef } from 'react';
 import './App.css';
 
 import Header from './Components/Header';
@@ -6,28 +6,42 @@ import TermsCounter from './Components/TermsCounter';
 import RelatedTerms from './Components/RelatedTerms';
 import GithubUsers from './Components/GithubUsers';
 
+import useTopics from './hooks/getTopics';
+
 function App() {
+  const { data, refetch } = useTopics({ initialTopic: process.env.REACT_APP_INITIAL_SEARCH_VALUE || '' });
+  const refetchSearchRef = useRef<NodeJS.Timeout | string>('');
+
+  const onSelectTopic = (topicSelected: string) => {
+    refetch({ name: topicSelected });
+  }
+
+  const onSearch = (searchValue: string) => {
+    clearTimeout(refetchSearchRef.current);
+
+    refetchSearchRef.current = setTimeout(() => refetch({ name: searchValue}), 1000);
+  }
+
   return (
     <div className="App">
-      <Header titleText='Aspiration Takehome' placeholder='Search topic...' />
+      <Header
+        titleText='Aspiration Takehome'
+        placeholder='Search topic...'
+        onSearch={onSearch}
+      />
 
-      <TermsCounter term='React' count={77226} />
+      <TermsCounter
+        term={data?.topic.name}
+        count={data?.topic.stargazerCount}
+      />
 
-      <RelatedTerms currentTerm='React' relatedTopics={[{ name: 'angular' }, { name: 'nextjs' }, { name: 'react-native' }]} />
+      <RelatedTerms
+        currentTerm={data?.topic.name}
+        relatedTopics={data?.topic.relatedTopics}
+        onSelectTopic={onSelectTopic}
+      />
 
-      <GithubUsers currentTerm='React' users={[{
-        "avatarUrl": "https://avatars.githubusercontent.com/u/45117845?v=4",
-        "name": "Nathaniel Smith",
-        "login": "jnathaniels"
-      }, {
-        "avatarUrl": "https://avatars.githubusercontent.com/u/45118433?u=05d625da10e80779ab7733cbe58988bc7ce7353a&v=4",
-        "name": "Vittal Kumar",
-        "login": "vittal-kumar"
-      }, {
-        "avatarUrl": "https://avatars.githubusercontent.com/u/45134409?u=dba2daabcacaa7df486ceb7ace80dc1ed6cf242c&v=4",
-        "name": "Radosław Grabowski",
-        "login": "Radzieoon"
-      }]} />
+      <GithubUsers currentTerm={data?.topic.name} users={data?.topic.stargazers.nodes} />
     </div>
   );
 }

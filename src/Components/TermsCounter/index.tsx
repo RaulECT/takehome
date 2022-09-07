@@ -5,8 +5,8 @@ import { Label } from '../Label';
 import { COLORS, SIZES } from '../../Utils/generalStyles';
 
 type TermCounterProps = {
-  term: string;
-  count: number;
+  term: string | undefined;
+  count: number | undefined;
 };
 
 const Container = styled.section`
@@ -24,7 +24,7 @@ const CounterLabel = styled.p`
 const TermsCounter: React.FC<TermCounterProps> = ({ term, count }) => (
   <Container>
     <Label>{term} has:</Label>
-    <CounterLabel>{count}</CounterLabel>
+    <CounterLabel>{count || 0}</CounterLabel>
     <Label>stargazers</Label>
   </Container>
 );
