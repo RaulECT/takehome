@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef } from 'react';
 import './App.css';
 
 import Header from './Components/Header';
@@ -10,17 +10,30 @@ import useTopics from './hooks/getTopics';
 
 function App() {
   const { data, refetch } = useTopics({ initialTopic: 'react' });
-  console.log('[data]', data, process.env);
+  const refetchSearchRef = useRef<NodeJS.Timeout | string>('');
 
   const onSelectTopic = (topicSelected: string) => {
     refetch({ name: topicSelected });
   }
 
+  const onSearch = (searchValue: string) => {
+    clearTimeout(refetchSearchRef.current);
+
+    refetchSearchRef.current = setTimeout(() => refetch({ name: searchValue}), 1000);
+  }
+
   return (
     <div className="App">
-      <Header titleText='Aspiration Takehome' placeholder='Search topic...' />
+      <Header
+        titleText='Aspiration Takehome'
+        placeholder='Search topic...'
+        onSearch={onSearch}
+      />
 
-      <TermsCounter term={data?.topic.name} count={data?.topic.stargazerCount} />
+      <TermsCounter
+        term={data?.topic.name}
+        count={data?.topic.stargazerCount}
+      />
 
       <RelatedTerms
         currentTerm={data?.topic.name}
